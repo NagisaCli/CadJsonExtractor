@@ -80,3 +80,10 @@ The script will:
 4. Safely replace any in-use locked DLLs and unblock all assemblies.
 
 Once deployed, AutoCAD 2025 will automatically load the plugin upon typing any registered command (e.g., `EXTRACTJSON`).
+
+---
+
+## Documentation
+
+For comprehensive usage instructions, step-by-step walkthroughs, and schema explanations, see the [User Manual & Guide](docs/USER_GUIDE.md).
+
