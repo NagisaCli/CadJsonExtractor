@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage SchemaVersion="1.0" AppVersion="1.0.0"
+                    ProductCode="{A4F5B08C-8D52-4753-9031-1B898D7129FA}"
+                    Name="CadJsonExtractor" Description="Extract AutoCAD Geometry and Entities to High-Precision JSON">
+  <CompanyDetails Name="CadJsonExtractor" />
+  <Components Description="AutoCAD 2025 x64">
+    <RuntimeRequirements OS="Win64" Platform="AutoCAD" SeriesMin="R25.0" SeriesMax="R25.0" />
+    <ComponentEntry AppName="CadJsonExtractor" ModuleName="./Contents/CadJsonExtractor.AutoCAD.dll"
+                    AppDescription="AutoCAD JSON Entity and Geometry Extractor" LoadOnCommandInvocation="True">
+      <Commands GroupName="CADJSONEXTRACTOR">
+        <Command Global="EXTRACTJSON"   Local="EXTRACTJSON" />
+        <Command Global="EXPORTJSON"    Local="EXPORTJSON" />
+        <Command Global="CAD2JSON"      Local="CAD2JSON" />
+        <Command Global="CADJSON"       Local="CADJSON" />
+        <Command Global="JSONCOPY"      Local="JSONCOPY" />
+        <Command Global="COPYJSON"      Local="COPYJSON" />
+        <Command Global="JSONCLEANTEMP" Local="JSONCLEANTEMP" />
+        <Command Global="E3DCOPY"       Local="E3DCOPY" />
+        <Command Global="E3DCOPYBASE"   Local="E3DCOPYBASE" />
+        <Command Global="E3DCPB"        Local="E3DCPB" />
+        <Command Global="CP2E3D"        Local="CP2E3D" />
+        <Command Global="E3DEXPORTFILE" Local="E3DEXPORTFILE" />
+        <Command Global="E3DCLEANTEMP"  Local="E3DCLEANTEMP" />
+      </Commands>
+    </ComponentEntry>
+  </Components>
+</ApplicationPackage>

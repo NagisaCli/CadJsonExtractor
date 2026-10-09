@@ -1,0 +1,15 @@
+# Build outputs
+**/bin/
+**/obj/
+
+# Visual Studio / IDE
+.vs/
+*.user
+*.suo
+
+# Test results
+TestResults/
+
+# OS noise
+Thumbs.db
+.DS_Store

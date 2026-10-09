@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CadJsonExtractor.AutoCAD/CadJsonExtractor.AutoCAD.csproj" />
+    <Project Path="src/CadJsonExtractor.Core/CadJsonExtractor.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CadJsonExtractor.Tests/CadJsonExtractor.Tests.csproj" />
+  </Folder>
+</Solution>

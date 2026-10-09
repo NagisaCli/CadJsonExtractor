@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "CadJsonExtractor.AutoCAD/1.0.0": {
+        "dependencies": {
+          "CadJsonExtractor.Core": "1.0.0"
+        },
+        "runtime": {
+          "CadJsonExtractor.AutoCAD.dll": {}
+        }
+      },
+      "CadJsonExtractor.Core/1.0.0": {
+        "runtime": {
+          "CadJsonExtractor.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CadJsonExtractor.AutoCAD/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CadJsonExtractor.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
