@@ -24,11 +24,12 @@ Supports both file export (`.json`) and Windows clipboard exchange with automati
 
 | Command | Action | Description |
 |---|---|---|
-| `EXTRACTJSON` / `EXPORTJSON` / `CAD2JSON` | File Export | Prompts for entity selection and base point, opens save dialog, writes formatted `.json`. |
-| `COPYJSON` / `JSONCOPY` | Clipboard | Prompts for entity selection and base point, copies JSON to clipboard. |
+| **`JS`** (or `EXTRACTJSON`, `EXPORTJSON`, `CAD2JSON`) | File Export | **Primary shortcut**: Prompts for entity selection and base point, opens save dialog, writes formatted `.json`. |
+| **`JSC`** (or `COPYJSON`, `JSONCOPY`) | Clipboard | **Primary shortcut**: Prompts for entity selection and base point, copies JSON directly to Windows clipboard. |
 | `JSONCLEANTEMP` | Maintenance | Cleans temporary cache payload files from the temp directory. |
 | `E3DCOPY` / `CP2E3D` / `E3DCOPYBASE` | Compatibility | Legacy copy commands compatible with AVEVA E3D aid importers. |
 | `E3DEXPORTFILE` | Compatibility | Legacy command to export to `.cad2e3d.json`. |
+
 
 ---
 

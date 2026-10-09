@@ -35,6 +35,7 @@ namespace CadJsonExtractor.AutoCAD.Commands
 
         #region Commands: File Export
 
+        [CommandMethod("JS", CommandFlags.UsePickSet | CommandFlags.Modal)]
         [CommandMethod("EXTRACTJSON", CommandFlags.UsePickSet | CommandFlags.Modal)]
         [CommandMethod("EXPORTJSON", CommandFlags.UsePickSet | CommandFlags.Modal)]
         [CommandMethod("CAD2JSON", CommandFlags.UsePickSet | CommandFlags.Modal)]
@@ -76,6 +77,8 @@ namespace CadJsonExtractor.AutoCAD.Commands
 
         #region Commands: Clipboard Copy
 
+        [CommandMethod("JSC", CommandFlags.UsePickSet | CommandFlags.Modal)]
+        [CommandMethod("JSCOPY", CommandFlags.UsePickSet | CommandFlags.Modal)]
         [CommandMethod("COPYJSON", CommandFlags.UsePickSet | CommandFlags.Modal)]
         [CommandMethod("JSONCOPY", CommandFlags.UsePickSet | CommandFlags.Modal)]
         [CommandMethod("E3DCOPY", CommandFlags.UsePickSet | CommandFlags.Modal)]

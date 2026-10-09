@@ -1,4 +1,4 @@
-# Local Deployment Script for CadJsonExtractor
+# Local Deployment Script for CadJsonExtractor (Multi-Version AutoCAD Support)
 $ErrorActionPreference = 'Stop'
 
 Write-Host "=========================================" -ForegroundColor Cyan
@@ -11,26 +11,37 @@ if (-not (Test-Path $sourceRoot)) {
     throw "Source deploy directory not found: $sourceRoot"
 }
 
-# 1. Build Solution in Release mode
-Write-Host "`n[1/4] Building CadJsonExtractor (Release)..." -ForegroundColor Yellow
-$acadBuildBin = Join-Path $root "src\CadJsonExtractor.AutoCAD\bin\Release\net8.0-windows"
-$coreBuildBin = Join-Path $root "src\CadJsonExtractor.Core\bin\Release\net8.0"
-
+# 1. Build Multi-Target Solution in Release mode (.NET 8 + .NET 48)
+Write-Host "`n[1/4] Building CadJsonExtractor for net8.0-windows and net48..." -ForegroundColor Yellow
 dotnet build (Join-Path $root "src\CadJsonExtractor.AutoCAD\CadJsonExtractor.AutoCAD.csproj") -c Release
 
 # 2. Stage binaries into bundle directory
-Write-Host "`n[2/4] Staging bundle artifacts..." -ForegroundColor Yellow
+Write-Host "`n[2/4] Staging multi-target bundle artifacts..." -ForegroundColor Yellow
 $bundleContents = Join-Path $sourceRoot "CadJsonExtractor.bundle\Contents"
-if (-not (Test-Path $bundleContents)) {
-    New-Item -ItemType Directory -Path $bundleContents -Force | Out-Null
+$net8Dest = Join-Path $bundleContents "net8.0"
+$net48Dest = Join-Path $bundleContents "net48"
+
+New-Item -ItemType Directory -Path $net8Dest -Force | Out-Null
+New-Item -ItemType Directory -Path $net48Dest -Force | Out-Null
+
+# Clean legacy flat files in Contents root if present
+Get-ChildItem -Path $bundleContents -File | Remove-Item -Force -ErrorAction SilentlyContinue
+
+$net8Src = Join-Path $root "src\CadJsonExtractor.AutoCAD\bin\Release\net8.0-windows"
+$net48Src = Join-Path $root "src\CadJsonExtractor.AutoCAD\bin\Release\net48"
+
+# Copy net8.0 (AutoCAD 2025+)
+Copy-Item -Path (Join-Path $net8Src "CadJsonExtractor.AutoCAD.dll") -Destination (Join-Path $net8Dest "CadJsonExtractor.AutoCAD.dll") -Force
+Copy-Item -Path (Join-Path $net8Src "CadJsonExtractor.AutoCAD.pdb") -Destination (Join-Path $net8Dest "CadJsonExtractor.AutoCAD.pdb") -Force
+Copy-Item -Path (Join-Path $net8Src "CadJsonExtractor.Core.dll") -Destination (Join-Path $net8Dest "CadJsonExtractor.Core.dll") -Force
+Copy-Item -Path (Join-Path $net8Src "CadJsonExtractor.Core.pdb") -Destination (Join-Path $net8Dest "CadJsonExtractor.Core.pdb") -Force
+if (Test-Path (Join-Path $net8Src "CadJsonExtractor.AutoCAD.deps.json")) {
+    Copy-Item -Path (Join-Path $net8Src "CadJsonExtractor.AutoCAD.deps.json") -Destination (Join-Path $net8Dest "CadJsonExtractor.AutoCAD.deps.json") -Force
 }
 
-Copy-Item -Path (Join-Path $acadBuildBin "CadJsonExtractor.AutoCAD.dll") -Destination (Join-Path $bundleContents "CadJsonExtractor.AutoCAD.dll") -Force
-Copy-Item -Path (Join-Path $acadBuildBin "CadJsonExtractor.AutoCAD.pdb") -Destination (Join-Path $bundleContents "CadJsonExtractor.AutoCAD.pdb") -Force
-Copy-Item -Path (Join-Path $acadBuildBin "CadJsonExtractor.Core.dll") -Destination (Join-Path $bundleContents "CadJsonExtractor.Core.dll") -Force
-Copy-Item -Path (Join-Path $acadBuildBin "CadJsonExtractor.Core.pdb") -Destination (Join-Path $bundleContents "CadJsonExtractor.Core.pdb") -Force
-if (Test-Path (Join-Path $acadBuildBin "CadJsonExtractor.AutoCAD.deps.json")) {
-    Copy-Item -Path (Join-Path $acadBuildBin "CadJsonExtractor.AutoCAD.deps.json") -Destination (Join-Path $bundleContents "CadJsonExtractor.AutoCAD.deps.json") -Force
+# Copy net48 (AutoCAD 2021-2024)
+Get-ChildItem -Path $net48Src -File | ForEach-Object {
+    Copy-Item -Path $_.FullName -Destination (Join-Path $net48Dest $_.Name) -Force
 }
 
 function Deploy-FileSmart {
@@ -84,10 +95,15 @@ function Deploy-FolderSmart {
 }
 
 # 3. Deploy to AutoCAD ApplicationPlugins
-Write-Host "`n[3/4] Deploying to AutoCAD 2025 ApplicationPlugins..." -ForegroundColor Yellow
+Write-Host "`n[3/4] Deploying to AutoCAD ApplicationPlugins..." -ForegroundColor Yellow
 $acadPluginsDir = Join-Path $env:APPDATA "Autodesk\ApplicationPlugins"
 $acadTargetBundle = Join-Path $acadPluginsDir "CadJsonExtractor.bundle"
 $acadSourceBundle = Join-Path $sourceRoot "CadJsonExtractor.bundle"
+
+# Clean legacy flat files in target bundle if present
+if (Test-Path (Join-Path $acadTargetBundle "Contents\CadJsonExtractor.AutoCAD.dll")) {
+    Get-ChildItem -Path (Join-Path $acadTargetBundle "Contents") -File | Remove-Item -Force -ErrorAction SilentlyContinue
+}
 
 Deploy-FolderSmart -SourceDir $acadSourceBundle -TargetDir $acadTargetBundle
 

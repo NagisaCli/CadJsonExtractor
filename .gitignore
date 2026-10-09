@@ -1,6 +1,8 @@
 # Build outputs
 **/bin/
 **/obj/
+release/
+
 
 # Visual Studio / IDE
 .vs/

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFrameworks>net8.0-windows;net48</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>latest</LangVersion>
@@ -13,14 +13,15 @@
     <AutoCadDir Condition="'$(AutoCadDir)' == '' and Exists('D:\AutoCAD 2025\AutoCAD 2025')">D:\AutoCAD 2025\AutoCAD 2025</AutoCadDir>
     <AutoCadDir Condition="'$(AutoCadDir)' == '' and Exists('D:\AutoCAD 2025')">D:\AutoCAD 2025</AutoCadDir>
     <AutoCadDir Condition="'$(AutoCadDir)' == ''">C:\Program Files\Autodesk\AutoCAD 2025</AutoCadDir>
-    <NoWarn>$(NoWarn);MSB3277</NoWarn>
+    <NoWarn>$(NoWarn);MSB3277;NU1701</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CadJsonExtractor.Core\CadJsonExtractor.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!-- AutoCAD 2025+ (.NET 8 Windows x64) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
     <Reference Include="acmgd">
       <HintPath>$(AutoCadDir)\acmgd.dll</HintPath>
       <Private>false</Private>
@@ -33,6 +34,15 @@
       <HintPath>$(AutoCadDir)\accoremgd.dll</HintPath>
       <Private>false</Private>
     </Reference>
+  </ItemGroup>
+
+  <!-- AutoCAD 2021-2024 (.NET Framework 4.8 x64) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="All" />
+    <PackageReference Include="AutoCAD.NET" Version="24.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

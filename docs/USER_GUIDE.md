@@ -26,8 +26,8 @@ If you wish to load the assembly directly in AutoCAD:
 
 | Command | Shortcut / Aliases | Target Channel | Description |
 |---|---|---|---|
-| `EXTRACTJSON` | `EXPORTJSON`, `CAD2JSON`, `CADJSON` | File (`.json`) | Prompts to select geometry and specify a reference base point, then prompts for a file path to save formatted JSON. |
-| `COPYJSON` | `JSONCOPY` | Windows Clipboard | Extracts geometry and copies the JSON directly to the Windows clipboard. |
+| **`JS`** | `EXTRACTJSON`, `EXPORTJSON`, `CAD2JSON`, `CADJSON` | File (`.json`) | **Primary shortcut**: Prompts to select geometry and specify a reference base point, then prompts for a file path to save formatted JSON. |
+| **`JSC`** | `JSCOPY`, `COPYJSON`, `JSONCOPY` | Windows Clipboard | **Primary shortcut**: Extracts geometry and copies the JSON directly to the Windows clipboard. |
 | `JSONCLEANTEMP` | — | Disk Cleanup | Deletes temporary cached JSON payload files from the temp directory. |
 
 ### Legacy Bridge Compatibility Commands
@@ -40,6 +40,7 @@ These commands remain available for seamless integration with downstream importe
 | `E3DCOPYBASE` / `E3DCPB` | Clipboard | Same as above (prompts for alignment reference point). |
 | `E3DEXPORTFILE` | File (`.cad2e3d.json`) | Exports payload directly to `.cad2e3d.json` file. |
 | `E3DCLEANTEMP` | Maintenance | Cleans temporary CAD aid files. |
+
 
 ---
 
